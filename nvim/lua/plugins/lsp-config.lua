@@ -12,7 +12,11 @@ return {
 				ensure_installed = {
 					"lua_ls",
 					"tsserver",
-          "rust_analyzer"
+          "rust_analyzer",
+          "gopls",
+          "pyright",
+          "jdtls",
+          "kotlin_language_server",
 				},
 			})
 		end,
@@ -31,6 +35,18 @@ return {
         capabilities = capabilities
       })
       lspconfig.rust_analyzer.setup({
+        capabilities = capabilities
+      })
+      lspconfig.gopls.setup({
+        capabilities = capabilities
+      })
+      lspconfig.pyright.setup({
+        capabilities = capabilities
+      })
+      lspconfig.jdtls.setup({
+        capabilities = capabilities
+      })
+      lspconfig.kotlin_language_server.setup({
         capabilities = capabilities
       })
 
