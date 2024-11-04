@@ -11,7 +11,7 @@ return {
 			require("mason-lspconfig").setup({
 				ensure_installed = {
 					"lua_ls",
-					"tsserver",
+					"ts_ls",
           "rust_analyzer",
           "gopls",
           "pyright",
@@ -25,20 +25,32 @@ return {
 		"neovim/nvim-lspconfig",
 		config = function()
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
+      local util = require('lspconfig/util')
       local lspconfig = require("lspconfig")
 
       lspconfig.lua_ls.setup({
         capabilities = capabilities
       })
-			lspconfig.tsserver.setup({
+			lspconfig.ts_ls.setup({
         capabilities = capabilities
       })
       lspconfig.rust_analyzer.setup({
         capabilities = capabilities
       })
       lspconfig.gopls.setup({
-        capabilities = capabilities
+        capabilities = capabilities,
+        cmd = {"gopls"},
+        filetypes = { "go", "gomod", "gowork", "gotmpl" },
+        root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+        settings = {
+          gopls = {
+            completeUnimported = true,
+            usePlaceholders = true,
+            analyses = {
+              unusedparams = true,
+            }
+          },
+        }
       })
       lspconfig.pyright.setup({
         capabilities = capabilities
